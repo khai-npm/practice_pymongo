@@ -3,6 +3,7 @@ sys.path.append("./src/models/")
 from role import role
 import pymongo
 from permission_schema import permission_schema
+from collections import Counter
 from bson import ObjectId
 
 class role_schema:
@@ -95,6 +96,7 @@ class role_schema:
             
     def add_new_role(self, new_role : role):
         new_role.role_name = new_role.role_name.replace(" ", "").lower()
+
         for i in new_role.permissions:
             i = i.replace(" ", "")
         per_db = permission_schema()
@@ -106,6 +108,10 @@ class role_schema:
             for i in new_role.permissions:
                 if i not in per_db.get_per_list():
                     raise ValueError('a permission not in system')
+                
+            lst = Counter(new_role.permissions)
+            if any(i > 1 for i in lst.values()):
+                raise ValueError('duplicated permission in role')
             
             self.role_col.insert_one({
                                             "role_name" : new_role.role_name,
