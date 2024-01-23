@@ -1,19 +1,26 @@
 import sys
 sys.path.append("./src/models/")
 sys.path.append("./src/routers/utils")
+sys.path.append("./src/settings")
 from user import user
 from password_hash_util import hash_password
 from bson import ObjectId
 from role_schema import role_schema
+import json
 
 
 import pymongo
 
 class user_schema:
     def __init__(self):
+
+        file = open("./src/settings/appsettings.json")
+        data = json.load(file)
+
+        connection_string = data['connection_string']['default_connection_string']
         self.roledb = role_schema()
         self.hash_util = hash_password()
-        self.Session = pymongo.MongoClient("mongodb://localhost:27017/")
+        self.Session = pymongo.MongoClient(connection_string)
         self.database = self.Session["authenication_database"]
         self.user_col = self.database["users"]
         

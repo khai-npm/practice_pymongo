@@ -1,3 +1,4 @@
+import json
 import sys
 sys.path.append("./src/models/")
 from permission import permission
@@ -5,7 +6,11 @@ import pymongo
 
 class permission_schema:
     def __init__(self):
-        self.Session = pymongo.MongoClient("mongodb://localhost:27017/")
+        file = open("./src/settings/appsettings.json")
+        data = json.load(file)
+
+        connection_string = data['connection_string']['default_connection_string']
+        self.Session = pymongo.MongoClient(connection_string)
         self.database = self.Session["authenication_database"]
         self.permission_col = self.database["permissions"]
         

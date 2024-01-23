@@ -65,7 +65,7 @@ async def update_user(id : str, update_user : user):
 
 #-------------------------------------------------------------------API for Roles (/api/role)
 #--------Start CRUD---------
-@app.get("/api/role/list")
+@app.get("/api/role/lists")
 async def get_list_of_role():
     db = role_schema()
     return response_obj(status="SUCCESS", message="get role list", object=db.get_all_role())
