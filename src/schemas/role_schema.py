@@ -121,8 +121,6 @@ class role_schema:
             i = i.replace(" ", "")
         per_db = permission_schema()
         try:
-            if self.role_col.find_one({"role_name" : new_role.role_name}) is not None:
-                raise ValueError('role name existed !')
             
             if self.get_role_by_id(roleid) is None:
                 raise ValueError('role does not exist')

@@ -30,9 +30,9 @@ class permission_schema:
     def add_new_per(self, pername : permission):
         pername.permission_name = pername.permission_name.replace(" ", "").lower()
         try:
-            if pername == "":
+            if pername.permission_name == "":
                 raise ValueError('permission field must not be null')
-            if pername in self.get_per_list():
+            if pername.permission_name in self.get_per_list():
                 raise ValueError('permission already exist')
             self.permission_col.insert_one({"permission_name" : pername.permission_name})
         except ValueError as e:

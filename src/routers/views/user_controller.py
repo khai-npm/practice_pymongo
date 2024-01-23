@@ -68,7 +68,7 @@ async def update_user(id : str, update_user : user):
 @app.get("/api/role/list")
 async def get_list_of_role():
     db = role_schema()
-    return response_obj(status="SUCCESS", message="get role list", object=db.get_per_list())
+    return response_obj(status="SUCCESS", message="get role list", object=db.get_all_role())
 
 @app.get("/api/role/{id}")
 async def get_role_by_id(id : str):
